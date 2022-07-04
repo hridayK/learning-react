@@ -1,23 +1,34 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import Task from './components/Task';
 
-function App() {
+function Tasks(props){
+  return (<h3>{props.element}</h3>);
+}
+
+function App(props) {
+
+  let [input, setInput] = useState("");
+  let [list, setList] = useState([""]);
+
+  function addElement(){
+    setInput(input = document.getElementById('tasks-input').value);
+    if(input!=""){
+      setList(list => [...list, input]);
+    }
+    console.log(list);
+  }
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Todo List:</h1>
+        <input type="text"  id="tasks-input" />
+        <br />
+        <input type="button" value="add" onClick={addElement} />
+        <br />
+        {list.map((list) => <Tasks element={list}/>)}
     </div>
   );
 }
